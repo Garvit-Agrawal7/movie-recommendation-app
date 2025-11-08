@@ -15,10 +15,11 @@ def recommend():
     try:
         data = request.get_json()
         user_answers = data.get('answers', {})
+        page_no = data.get('page_no', 1)
 
         preferences = transform_answers_to_preferences(user_answers)
 
-        recommendations = recommendation_algo.recommend_movies(preferences)
+        recommendations = recommendation_algo.recommend_movies(preferences, page_no=page_no)
 
         if not recommendations:
             recommendations = []
@@ -26,7 +27,8 @@ def recommend():
         return jsonify({
             'status': 'success',
             'count': len(recommendations),
-            'data': recommendations
+            'data': recommendations,
+            'Page': page_no
         }), 200
 
     except Exception as e:

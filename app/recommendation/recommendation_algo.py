@@ -15,7 +15,7 @@ class RecommendationAlgorithm:
     def _load_genre_mapping(self):
         return self.db_manager.get_genres()
 
-    def recommend_movies(self, user_preferences):
+    def recommend_movies(self, user_preferences, page_no):
         """
         Generate movie recommendations based on user preferences.
 
@@ -25,6 +25,7 @@ class RecommendationAlgorithm:
                 - year_range: Tuple of (min_year, max_year)
                 - duration: Tuple of (min_duration, max_duration)
                 - min_rating: Minimum vote average (0-10)
+            page_no: Page number
 
         Returns:
             List of movie dictionaries matching user preferences
@@ -43,6 +44,7 @@ class RecommendationAlgorithm:
                 year_range=year_range,
                 duration=duration,
                 min_rating=min_rating,
+                page_no=page_no
             )
 
             return recommendations
@@ -66,13 +68,14 @@ class RecommendationAlgorithm:
 
         return genre_ids
 
-    def _discover_movies(self, genre_ids, year_range, duration, min_rating):
+    def _discover_movies(self, genre_ids, year_range, duration, min_rating, page_no):
         """
         Args:
             genre_ids: List of genre IDs to filter by
             year_range: Tuple of (min_year, max_year)
             duration: Tuple of (min_duration, max_duration)
             min_rating: Minimum vote average threshold
+            page_no: Page number
         Returns:
             List of movie dictionaries
         """
@@ -84,7 +87,7 @@ class RecommendationAlgorithm:
             'vote_average.gte': min_rating,
             'primary_release_date.gte': f"{year_range[0]}-01-01",
             'primary_release_date.lte': f"{year_range[1]}-12-31",
-            'page': 1,
+            'page': page_no,
             'include_adult': True,
             'with_runtime.gte': duration[0],
             'with_runtime.lte': duration[1],
