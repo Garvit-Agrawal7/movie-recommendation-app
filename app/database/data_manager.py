@@ -5,8 +5,8 @@ class DatabaseManager:
     def __init__(self):
         self.base_url = 'https://api.themoviedb.org/3'
         self.image_base_url = 'https://image.tmdb.org/t/p/w500'
-        self.api_key = '4bd5ebdd64137a63a4353545771c387d'
-        self.access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YmQ1ZWJkZDY0MTM3YTYzYTQzNTM1NDU3NzFjMzg3ZCIsIm5iZiI6MTc2MDk1OTI3Mi4wOTc5OTk4LCJzdWIiOiI2OGY2MWIyOGZkNzY2MTQ5ODE2OTE1MTUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.oeFHIN624Qzt4oVWZ6hRiPmP2oHW4Fbbybr7QF27RnQ'
+        self.api_key = os.environ('API")
+        self.access_token = os.environ('TOKEN')
         self.headers = {"Authorization": "Bearer " + self.access_token}
         self.session = req.Session()
 
